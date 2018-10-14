@@ -1,7 +1,7 @@
 // Copyright (c) 2018 All Rights Reserved WestBot
 
 #include <QDebug>
-
+#include <QStringBuilder>
 #include <WestBot/RPLidar/private/RPLidarPrivate.hpp>
 
 using namespace rp::standalone::rplidar;
@@ -12,11 +12,21 @@ namespace
     QString deviceInfoToString( rplidar_response_device_info_t deviceInfo )
     {
         QString info =
-            QString( "Model: %1 Firmware version: %2 Hardware version: %3 Serial number: %4" )
+            QString( "RPLidar infos:\r\nModel: %1\r\nFirmware version: %2.%3\r\nHardware version: %4\r\n" )
                 .arg( deviceInfo.model )
-                .arg( deviceInfo.firmware_version )
-                .arg( deviceInfo.hardware_version )
-                .arg( QString::fromUtf16( ( ushort* )( deviceInfo.serialnum ) ) );
+                .arg( deviceInfo.firmware_version >> 8 )
+                .arg( deviceInfo.firmware_version & 0xFF )
+                .arg( deviceInfo.hardware_version );
+
+        QString serial;
+        serial = "RPLIDAR S/N: ";
+
+        for( int pos = 0; pos < 16 ; ++pos )
+        {
+            serial += QString( "%1" ).arg( deviceInfo.serialnum[ pos ], 2, 16, QChar( '0' ) ).toUpper();
+        }
+
+        info = QString( info % serial );
         return info;
     }
 
@@ -208,19 +218,14 @@ bool RPLidarPrivate::grabScanData(
     quint32 timeout )
 {
     u_result operationResult;
-    rplidar_response_measurement_node_t* buffer;
 
-    operationResult = _lidarDriver->grabScanData( buffer, count, timeout );
+    operationResult = _lidarDriver->grabScanData( ( rplidar_response_measurement_node_t* )nodeBuffer, count, timeout );
 
     if( IS_FAIL( operationResult ) )
     {
         qWarning() << "Error, cannot grab scan data";
         return false;
     }
-
-    nodeBuffer->sync_quality = buffer->sync_quality;
-    nodeBuffer->angle_q6_checkbit = buffer->angle_q6_checkbit;
-    nodeBuffer->distance_q2 = buffer->distance_q2;
 
     return true;
 }
@@ -230,19 +235,14 @@ bool RPLidarPrivate::ascendScanData(
     size_t count )
 {
     u_result operationResult;
-    rplidar_response_measurement_node_t* buffer;
 
-    operationResult = _lidarDriver->ascendScanData( buffer, count );
+    operationResult = _lidarDriver->ascendScanData( (rplidar_response_measurement_node_t*) nodeBuffer, count );
 
     if( IS_FAIL( operationResult ) )
     {
         qWarning() << "Error, cannot ascend scan data";
         return false;
     }
-
-    nodeBuffer->sync_quality = buffer->sync_quality;
-    nodeBuffer->angle_q6_checkbit = buffer->angle_q6_checkbit;
-    nodeBuffer->distance_q2 = buffer->distance_q2;
 
     return true;
 }
