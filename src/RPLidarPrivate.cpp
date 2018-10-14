@@ -1,6 +1,5 @@
 // Copyright (c) 2018 All Rights Reserved WestBot
 
-#include <QDebug>
 #include <QStringBuilder>
 
 #include <WestBot/HumanAfterAll/Category.hpp>
@@ -65,7 +64,7 @@ bool RPLidarPrivate::connect()
     if( IS_FAIL( _lidarDriver->connect(
             _port.toStdString().c_str(), _baudrate ) ) )
     {
-        qWarning()
+        tWarning( LOG )
             << "Error, cannot bind to the specified serial port:" << _port;
         return false;
     }
@@ -109,7 +108,7 @@ bool RPLidarPrivate::checkMotorCtrlSupport( quint32 timeout )
     if( IS_FAIL( _lidarDriver->checkMotorCtrlSupport(
             motorCtrlSupport, timeout ) ) )
     {
-        qWarning() << "Error, cannot check motor control support.";
+        tWarning( LOG ) << "Error, cannot check motor control support.";
         return false;
     }
 
@@ -142,7 +141,7 @@ bool RPLidarPrivate::checkExpressScanSupported( quint32 timeout )
     if( IS_FAIL( _lidarDriver->checkExpressScanSupported(
             expressScanSupport, timeout ) ) )
     {
-        qWarning() << "Error, cannot check express scan support.";
+        tWarning( LOG ) << "Error, cannot check express scan support.";
         return false;
     }
 
@@ -157,15 +156,16 @@ bool RPLidarPrivate::checkHealth( quint32 timeout )
     operationResult = _lidarDriver->getHealth( healthInfo, timeout );
     if( IS_FAIL( operationResult ) )
     {
-        qWarning() << "Error, cannot retrieve the lidar health code";
+        tWarning( LOG ) << "Error, cannot retrieve the lidar health code";
         return false;
     }
 
     qDebug() << "RPLidar health status:" << healthInfo.status;
     if( RPLIDAR_STATUS_ERROR == healthInfo.status )
     {
-        qWarning() << "Error, rplidar internal error detected."
-                      " Please reboot the device to retry.";
+        tWarning( LOG )
+            << "Error, rplidar internal error detected."
+               " Please reboot the device to retry.";
         reset( timeout ); // automatically reboot de device
         return false;
     }
@@ -182,7 +182,7 @@ QString RPLidarPrivate::getDeviceInfo( quint32 timeout )
 
     if( IS_FAIL( operationResult ) )
     {
-        qWarning() << "Error, cannot get device info.";
+        tWarning( LOG ) << "Error, cannot get device info.";
         return QString();
     }
 
@@ -198,7 +198,7 @@ QString RPLidarPrivate::getSampleDurationUs( quint32 timeout )
 
     if( IS_FAIL( operationResult ) )
     {
-        qWarning() << "Error, cannot get rate info.";
+        tWarning( LOG ) << "Error, cannot get rate info.";
         return QString();
     }
 
@@ -229,7 +229,7 @@ bool RPLidarPrivate::grabScanData(
 
     if( IS_FAIL( operationResult ) )
     {
-        qWarning() << "Error, cannot grab scan data";
+        tWarning( LOG ) << "Error, cannot grab scan data";
         return false;
     }
 
@@ -246,7 +246,7 @@ bool RPLidarPrivate::ascendScanData(
 
     if( IS_FAIL( operationResult ) )
     {
-        qWarning() << "Error, cannot ascend scan data";
+        tWarning( LOG ) << "Error, cannot ascend scan data";
         return false;
     }
 
