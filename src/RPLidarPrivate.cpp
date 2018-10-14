@@ -2,13 +2,19 @@
 
 #include <QDebug>
 #include <QStringBuilder>
+
+#include <WestBot/HumanAfterAll/Category.hpp>
+
 #include <WestBot/RPLidar/private/RPLidarPrivate.hpp>
 
 using namespace rp::standalone::rplidar;
+using namespace WestBot;
 using namespace WestBot::RPLidar;
 
 namespace
 {
+    HUMANAFTERALL_LOGGING_CATEGORY( LOG, "WestBot.RPLidar.RPLidar" )
+
     QString deviceInfoToString( rplidar_response_device_info_t deviceInfo )
     {
         QString info =

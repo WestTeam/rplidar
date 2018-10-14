@@ -15,6 +15,9 @@ HEADERS += include/WestBot/RPLidar/private/RPLidarPrivate.hpp \
 SOURCES += src/RPLidarPrivate.cpp \
            src/RPLidar.cpp 
 
+INCLUDEPATH += ../human-after-all/include/
+LIBS += -L../rplidar/libs -lHumanAfterAll
+
 LIBS += -L../rplidar/3rdparty/rplidar_sdk/lib -lrplidar_sdk
 
 DEFINES += WESTBOT_RPLIDARSHAREDLIB_LIBRARY
