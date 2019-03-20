@@ -18,6 +18,9 @@ typedef struct measurementNode
     quint8    sync_quality;      // syncbit:1;syncbit_inverse:1;quality:6;
     quint16   angle_q6_checkbit; // check_bit:1;angle_q6:15;
     quint16   distance_q2;
+    qint16    pos_x;
+    qint16    pos_y;
+    qint16    pos_teta;
 } __attribute__((packed)) measurementNode_t;
 
 class RPLidarPrivate;
@@ -42,6 +45,8 @@ public:
 
     bool startScan( bool force = false, bool autoExpressMode = true );
     bool startScanNormal( bool force, quint32 timeout = DEFAULT_TIMEOUT );
+    bool startScanNormalRobotPos( bool force, quint32 timeout = DEFAULT_TIMEOUT  );
+
     bool startScanExpress(
         bool fixedAngle,
         quint32 timeout = DEFAULT_TIMEOUT );

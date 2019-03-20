@@ -32,6 +32,8 @@ public:
 
     bool startScan( bool force = false, bool autoExpressMode = true );
     bool startScanNormal( bool force, quint32 timeout );
+    bool startScanNormalRobotPos( bool force, quint32 timeout );
+
     bool startScanExpress( bool fixedAngle, quint32 timeout );
     bool stopScan( quint32 timeout );
     bool checkExpressScanSupported( quint32 timeout );

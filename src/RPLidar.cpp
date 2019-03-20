@@ -66,6 +66,11 @@ bool RPLidar::startScanNormal( bool force, quint32 timeout )
     return _d->startScanNormal( force, timeout );
 }
 
+bool RPLidar::startScanNormalRobotPos( bool force, quint32 timeout )
+{
+    return _d->startScanNormalRobotPos( force, timeout );
+}
+
 bool RPLidar::startScanExpress( bool fixedAngle, quint32 timeout )
 {
     return _d->startScanExpress( fixedAngle, timeout );

@@ -117,7 +117,7 @@ bool RPLidarPrivate::checkMotorCtrlSupport( quint32 timeout )
 
 bool RPLidarPrivate::startScan( bool force , bool autoExpressMode )
 {
-    return IS_FAIL( _lidarDriver->startScan( force, autoExpressMode ) );
+    return IS_FAIL( _lidarDriver->startScanNormal( force ) );
 }
 
 bool RPLidarPrivate::startScanNormal( bool force, quint32 timeout )
@@ -125,10 +125,16 @@ bool RPLidarPrivate::startScanNormal( bool force, quint32 timeout )
     return IS_FAIL( _lidarDriver->startScanNormal( force, timeout ) );
 }
 
-bool RPLidarPrivate::startScanExpress( bool fixedAngle, quint32 timeout )
+bool RPLidarPrivate::startScanNormalRobotPos( bool force, quint32 timeout )
+{
+    return IS_FAIL( _lidarDriver->startScanNormalRobotPos(force, timeout ) );
+}
+
+bool RPLidarPrivate::startScanExpress( bool fixedAngle, quint32 timeout  )
 {
     return IS_FAIL( _lidarDriver->startScanExpress( fixedAngle, timeout ) );
 }
+
 
 bool RPLidarPrivate::stopScan( quint32 timeout )
 {
@@ -225,7 +231,7 @@ bool RPLidarPrivate::grabScanData(
 {
     u_result operationResult;
 
-    operationResult = _lidarDriver->grabScanData( ( rplidar_response_measurement_node_t* )nodeBuffer, count, timeout );
+    operationResult = _lidarDriver->grabScanData( ( rplidar_response_measurement_node_robotpos_t* )nodeBuffer, count, timeout );
 
     if( IS_FAIL( operationResult ) )
     {
@@ -242,7 +248,7 @@ bool RPLidarPrivate::ascendScanData(
 {
     u_result operationResult;
 
-    operationResult = _lidarDriver->ascendScanData( (rplidar_response_measurement_node_t*) nodeBuffer, count );
+    operationResult = _lidarDriver->ascendScanData( (rplidar_response_measurement_node_robotpos_t*) nodeBuffer, count );
 
     if( IS_FAIL( operationResult ) )
     {
