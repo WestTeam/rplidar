@@ -25,7 +25,7 @@ class RPLidarPrivate;
 class RPLidar
 {
 public:
-    RPLidar( const QString& port, quint32 baudrate = 115200 );
+    RPLidar( const QString& port, quint32 baudrate = 256000 );
     ~RPLidar();
 
     bool connect();

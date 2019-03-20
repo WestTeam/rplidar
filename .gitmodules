@@ -1,0 +1,3 @@
+[submodule "3rdparty/rplidar_sdk"]
+	path = 3rdparty/rplidar_sdk
+	url = https://github.com/WestTeam/rplidar_sdk.git

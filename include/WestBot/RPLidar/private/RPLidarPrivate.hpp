@@ -5,7 +5,7 @@
 
 #include <QString>
 
-#include <3rdparty/rplidar_sdk/include/rplidar.h>
+#include <3rdparty/rplidar_sdk/sdk/sdk/include/rplidar.h>
 
 #include "../RPLidar.hpp"
 

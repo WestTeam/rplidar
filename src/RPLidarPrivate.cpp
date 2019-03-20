@@ -49,7 +49,7 @@ RPLidarPrivate::RPLidarPrivate( const QString& port, quint32 baudrate )
     : _port( port )
     , _baudrate( baudrate )
     , _lidarDriver( RPlidarDriver::CreateDriver(
-                        RPlidarDriver::DRIVER_TYPE_SERIALPORT ) )
+                        rp::standalone::rplidar::DRIVER_TYPE_SERIALPORT ) )
 {
 }
 
